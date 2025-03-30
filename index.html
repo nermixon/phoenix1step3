@@ -1,95 +1,93 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ФЕНИКС-1 | ОТРАЖЕНИЕ</title>
+    <title>.</title>
     <style>
         body {
             background-color: #000;
-            color: #FF4500;
-            font-family: 'Courier New', monospace;
+            color: #fff;
+            font-family: monospace;
             text-align: center;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
-        #locked {
-            display: block;
-        }
-        #unlocked {
-            display: none;
+        .container {
+            margin: 0 auto;
+            width: 200px;
         }
         input {
-            background: #111;
-            color: #FF4500;
-            border: 1px solid #FF4500;
-            padding: 10px;
-            margin: 10px;
-            font-family: inherit;
+            background: transparent;
+            color: #fff;
+            border: none;
+            border-bottom: 1px solid #fff;
+            padding: 5px 0;
+            margin: 10px 0;
+            font-family: monospace;
+            text-align: center;
+            width: 100%;
+            outline: none;
+            font-size: 16px;
         }
         button {
-            background: #FF4500;
-            color: #000;
-            border: none;
-            padding: 10px 20px;
+            background: transparent;
+            color: #fff;
+            border: 1px solid #fff;
+            padding: 5px 15px;
+            margin-top: 15px;
+            font-family: monospace;
             cursor: pointer;
-            font-family: inherit;
-            font-weight: bold;
+            width: 100%;
         }
-        .mirror-text {
+        .mirror {
             transform: scaleX(-1);
-            font-size: 24px;
             margin: 30px auto;
-            max-width: 600px;
-            line-height: 1.5;
+            letter-spacing: 1px;
         }
-        .hint {
-            color: #555;
-            font-size: 14px;
-            margin-top: 30px;
-        }
+        #stage1 { display: block; }
+        #stage2 { display: none; }
     </style>
 </head>
 <body>
-    <!-- Заблокированная часть -->
-    <div id="locked">
-        <h1>ДОСТУП К ОТРАЖЕНИЮ ЗАКРЫТ</h1>
-        <p>Введите код из спектрограммы:</p>
-        <input type="text" id="codeInput" placeholder="Код">
-        <button onclick="checkCode()">ПРОВЕРИТЬ</button>
-        <p class="hint">Подсказка: проверьте аудиофайл из этапа "Тишина"</p>
+    <div id="stage1" class="container">
+        <div>ДОСТУП ЗАКРЫТ</div>
+        <div>Введите пароль</div>
+        <input type="text" id="code" maxlength="4">
+        <button onclick="checkCode()">Войти</button>
     </div>
-
-    <!-- Разблокированная часть -->
-    <div id="unlocked">
-        <h1>ОТРАЖЕНИЕ</h1>
-        <div class="mirror-text">
-            Ссылка: /x7f9n3
-        </div>
-        <p class="hint">Используйте инструменты для отражения текста</p>
+    
+    <div id="stage2" class="mirror">
+        /x7f9n3
     </div>
 
     <script>
+        document.getElementById('code').focus();
+        
         function checkCode() {
-            const code = document.getElementById("codeInput").value.trim().toUpperCase();
-            if (code === "PH1" || code === "PH-1") {
-                document.getElementById("locked").style.display = "none";
-                document.getElementById("unlocked").style.display = "block";
+            const code = document.getElementById('code').value.toUpperCase();
+            if (code === 'PH1' || code === 'PH-1') {
+                document.getElementById('stage1').style.display = 'none';
+                document.getElementById('stage2').style.display = 'block';
             } else {
-                alert("Неверный код. Проверьте спектрограмму.");
+                document.getElementById('code').value = '';
             }
         }
         
-        // Автопереход если код уже в URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const codeParam = urlParams.get('code');
-        if (codeParam && (codeParam.toUpperCase() === "PH1" || codeParam.toUpperCase() === "PH-1")) {
-            document.getElementById("locked").style.display = "none";
-            document.getElementById("unlocked").style.display = "block";
+        // Обработка Enter
+        document.getElementById('code').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') checkCode();
+        });
+        
+        // Автопереход по URL
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('code')?.toUpperCase() === 'PH1') {
+            document.getElementById('stage1').style.display = 'none';
+            document.getElementById('stage2').style.display = 'block';
         }
     </script>
 </body>
