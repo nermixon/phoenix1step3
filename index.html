@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>.</title>
+    <title>PHOENIX-1</title>
     <style>
         body {
             background-color: #000;
@@ -44,50 +44,50 @@
             cursor: pointer;
             width: 100%;
         }
-        .mirror {
+        .mirror-text {
             transform: scaleX(-1);
-            margin: 30px auto;
             letter-spacing: 1px;
+            font-size: 1.2em;
+            margin-top: 30px;
         }
-        #stage1 { display: block; }
-        #stage2 { display: none; }
+        #login { display: block; }
+        #content { display: none; }
     </style>
 </head>
 <body>
-    <div id="stage1" class="container">
+    <div id="login" class="container">
         <div>ДОСТУП ЗАКРЫТ</div>
         <div>Введите пароль</div>
-        <input type="text" id="code" maxlength="4">
-        <button onclick="checkCode()">Войти</button>
+        <input type="text" id="password" maxlength="4">
+        <button onclick="checkPassword()">Войти</button>
     </div>
     
-    <div id="stage2" class="mirror">
-        /x7f9n3
+    <div id="content" class="container">
+        <div class="mirror-text">/x7f9n3</div>
     </div>
 
     <script>
-        document.getElementById('code').focus();
+        document.getElementById('password').focus();
         
-        function checkCode() {
-            const code = document.getElementById('code').value.toUpperCase();
-            if (code === 'PH1' || code === 'PH-1') {
-                document.getElementById('stage1').style.display = 'none';
-                document.getElementById('stage2').style.display = 'block';
+        function checkPassword() {
+            const pass = document.getElementById('password').value.toUpperCase();
+            if (pass === 'PH1' || pass === 'PH-1') {
+                document.getElementById('login').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
             } else {
-                document.getElementById('code').value = '';
+                document.getElementById('password').value = '';
             }
         }
         
-        // Обработка Enter
-        document.getElementById('code').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') checkCode();
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') checkPassword();
         });
         
-        // Автопереход по URL
-        const params = new URLSearchParams(window.location.search);
-        if (params.get('code')?.toUpperCase() === 'PH1') {
-            document.getElementById('stage1').style.display = 'none';
-            document.getElementById('stage2').style.display = 'block';
+        // Авторизация по URL
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('code')?.toUpperCase() === 'PH1') {
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
         }
     </script>
 </body>
