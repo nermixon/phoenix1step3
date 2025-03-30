@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ФЕНИКС-1 | ОТРАЖЕНИЕ</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #FF4500;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        #locked {
+            display: block;
+        }
+        #unlocked {
+            display: none;
+        }
+        input {
+            background: #111;
+            color: #FF4500;
+            border: 1px solid #FF4500;
+            padding: 10px;
+            margin: 10px;
+            font-family: inherit;
+        }
+        button {
+            background: #FF4500;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+        }
+        .mirror-text {
+            transform: scaleX(-1);
+            font-size: 24px;
+            margin: 30px auto;
+            max-width: 600px;
+            line-height: 1.5;
+        }
+        .hint {
+            color: #555;
+            font-size: 14px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Заблокированная часть -->
+    <div id="locked">
+        <h1>ДОСТУП К ОТРАЖЕНИЮ ЗАКРЫТ</h1>
+        <p>Введите код из спектрограммы:</p>
+        <input type="text" id="codeInput" placeholder="Код">
+        <button onclick="checkCode()">ПРОВЕРИТЬ</button>
+        <p class="hint">Подсказка: проверьте аудиофайл из этапа "Тишина"</p>
+    </div>
+
+    <!-- Разблокированная часть -->
+    <div id="unlocked">
+        <h1>ОТРАЖЕНИЕ</h1>
+        <div class="mirror-text">
+            Ссылка: /x7f9n3
+        </div>
+        <p class="hint">Используйте инструменты для отражения текста</p>
+    </div>
+
+    <script>
+        function checkCode() {
+            const code = document.getElementById("codeInput").value.trim().toUpperCase();
+            if (code === "PH1" || code === "PH-1") {
+                document.getElementById("locked").style.display = "none";
+                document.getElementById("unlocked").style.display = "block";
+            } else {
+                alert("Неверный код. Проверьте спектрограмму.");
+            }
+        }
+        
+        // Автопереход если код уже в URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const codeParam = urlParams.get('code');
+        if (codeParam && (codeParam.toUpperCase() === "PH1" || codeParam.toUpperCase() === "PH-1")) {
+            document.getElementById("locked").style.display = "none";
+            document.getElementById("unlocked").style.display = "block";
+        }
+    </script>
+</body>
+</html>
